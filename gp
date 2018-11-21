@@ -1,3 +1,3 @@
 #!/bin/bash
 
-kubectl get pods | grep ^$1 | awk '{print$1}'
+kubectl get pods | grep ^$1 | grep -v ^NAME | awk '{print$1}'
