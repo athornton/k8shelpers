@@ -1,0 +1,28 @@
+#!/bin/bash
+
+function reapStatus() {
+    local status=$1
+    pods=$(kubectl get pods | awk '{print $1}' | grep -v NAME );
+    l="";
+    for p in $pods;
+    do
+        k=$(kubectl get pod -o json $p | jq .status.containerStatuses[].state.terminated.reason);
+        if [ $k == "\"${status}\"" ]; then
+            l="${l} $p ";
+        fi;
+    done;
+    if [ -n "${l}" ]; then
+        kubectl delete pod ${l};
+    fi
+}
+
+function reapCompleted() {
+    reapStatus "Completed"
+}
+
+function mapPods() {
+    for i in $(kubectl get pods | grep -v NAME | awk '{print $1}' | sort ); do
+        j=$(kubectl describe pod $i | grep -i Node: | awk '{print $2}' )
+	echo "${i} => ${j}"
+    done
+}
