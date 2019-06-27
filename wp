@@ -1,6 +1,0 @@
-#!/bin/bash
-for p in $(kubectl get pods | grep -v NAME | awk '{print $1}'); do
-    d=$(kubectl describe pod $p | grep Node: | awk '{print $2}' |
-            cut -d '/' -f 1)
-    echo "${p}: ${d}"
-done
