@@ -115,3 +115,9 @@ function changecluster() {
             ;;
     esac
 }
+
+function dedangle() {
+    for i in image builder; do
+	docker ${i} prune -f
+    done
+}
