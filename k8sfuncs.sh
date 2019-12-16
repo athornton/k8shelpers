@@ -120,4 +120,12 @@ function dedangle() {
     for i in image builder; do
 	docker ${i} prune -f
     done
+
+function findhub() {
+    kubectl get pods | grep hub | grep 'ContainerCreating\|Running' | \
+	awk '{print $1}'
+}
+
+function bh() {
+    ((kubectl delete pod $(findhub) &) | read l) && mp $(findhub)
 }
