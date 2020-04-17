@@ -107,12 +107,12 @@ function zapuser() {
 function changecluster() {
     local cl=$1
     case ${cl} in
-        prod|dev)
+        prod|dev|nts)
             ln -sf ${HOME}/.kube/k8s-${cl}-config ${HOME}/.kube/config
             echo "Cluster set to '${cl}'."
             ;;
         *)
-            echo 1>&2 "Cluster must be one of 'prod' or 'dev'."
+            echo 1>&2 "Cluster must be one of 'prod', 'dev', or 'nts'."
             ;;
     esac
 }
