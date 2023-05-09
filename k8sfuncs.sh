@@ -58,6 +58,10 @@ function  gp() {
     kubectl get pods | grep ^$1 | awk '{print $1}'
 }
 
+function  dp() {
+    kubectl get pods | grep ^$1 | awk '{print $1}' | xargs kubectl delete pod
+}
+
 function mp() {
     pod=$(kubectl get pods | grep ^$1 | awk '{print $1}')
     while : ; do
