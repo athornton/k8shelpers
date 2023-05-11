@@ -133,6 +133,17 @@ function findhub() {
 }
 
 
+function findnub() {
+    kubectl get pods | grep nub | grep 'ContainerCreating\|Running' | \
+	awk '{print $1}'
+}
+
+
 function bh() {
     ((kubectl delete pod $(findhub) &) | read l) && mp $(findhub)
+}
+
+
+function bn() {
+    ((kubectl delete pod $(findnub) &) | read l) && mp $(findnub)
 }
